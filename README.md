@@ -10,4 +10,4 @@ Here's what we're cooking up:
 - [ ] File Structure: Organizing our bot's brain so it can keep up with us. 🗂️
 - [ ] Commands: The magic words to make our bot do its thing. 🗣️
 
-Stay tuned, it's about to get lit! 🔥"
+Stay tuned, it's about to get lit! 🔥"!
