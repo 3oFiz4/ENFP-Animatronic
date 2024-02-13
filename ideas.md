@@ -6,5 +6,5 @@ New Ideas
 - Birthday Reminders
 - ENFP Verification
 - ENFP Roleplay (only enfp characters to roleplay)
-    ENFP character emotes
-  Emotional Status (Helps when ENFP needs mental support)
+      - ENFP character emotes
+- Emotional Status (Helps when ENFP needs mental support)
