@@ -9,6 +9,5 @@ class ping(commands.Cog):
     async def ping(self, ctx):
         await ctx.send('Pong!')
 
-
 async def setup(client):
     await client.add_cog(ping(client))

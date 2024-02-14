@@ -1,5 +1,7 @@
 For collaborators! To create a command. You should follow this Template! The variable in [] means it's optional, and depends on you.
 
+The name for the command can be anything! But it has to be understandable!
+
 ```python
 import discord
 from discord.ext import commands

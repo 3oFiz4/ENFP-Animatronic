@@ -14,6 +14,34 @@ Stay tuned, it's about to get lit! 🔥"!
 
 ## 🌈 What's Inside?
 - **maincog.py:** This is a test command, to see if the Discord cogs working as expected or not.
+- **addnote.py** This is a command for adding a note. Such command can be described below.
+```bash
+>addnote "YOUR_TEXT"
+
+# example
+>addnote "This is a note"
+```
+- **editnote.py** This is a command for edit a note. Such command can be described below.
+```bash
+>editnote YOUR_NOTE_ID "YOUR_TEXT"
+
+# example
+>editnote 6 "The new note"
+```
+- **listnote.py** This is a command for list a notes. Such command can be described below.
+```bash
+>listnote
+
+# example
+>listnote
+```
+- **removenote.py** This is a command for remove a note. Such command can be described below.
+```bash
+>removenote YOUR_NOTE_ID
+
+# example
+>removenote 6 # will remove the note with id of 6.
+```
 
 We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
 
@@ -35,7 +63,10 @@ pip install -r requirements.txt
 
 4. **Create and configure the environment variables (.env): (I assume you know how to do this)**
 ```
-YOUR_BOT_ACCOUNT_TOKEN='PUT_YOUR_BOT_TOKEN_HERE'
+PROJECT_ROOT="YOUR_PROJECT_ABSOLUTE_PATH"
+YOUR_BOT_ACCOUNT_TOKEN="YOUR_BOT_TOKEN"
+SUPABASE_URL="YOUR_SUPABASE_URL"
+SUPABASE_KEY="YOUR_SUPABASE_KEY"
 ```
 
 5. **Locate through source directory:**
