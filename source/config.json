@@ -1,0 +1,12 @@
+{
+    "ON_READY": {
+        "PRESENCE_MESSAGE": "A cool ENFP bot :3"
+    },
+    "EVERY_EMBED_COLOR": {
+        "COLOR_IN_RGB": {
+            "R": 0,
+            "G": 200,
+            "B": 255
+        }
+    }
+}

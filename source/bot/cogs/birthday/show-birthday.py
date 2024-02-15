@@ -7,28 +7,25 @@ project_root = os.getenv('PROJECT_ROOT')
 sys.path.insert(0, project_root)
 from source.data.db import supabase  # Knowing that db.py is in the source/data directory
 from datetime import datetime
+from source.bot.utils import CogAlert, RaiseDBError, BaseEmbed, TimeToBirthdate
 
 class ShowBirthday(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command()
-    async def showbirthday(self, ctx, *, date: str):
+    async def showbirthday(self, ctx, *, name: str):
         try:
-            # TODO: Hey, dedrakenkeizer. Fix this one please.
-            # TODO: I want you to show the user birthday.
-            # TODO: The bug lies on the await ctx.send(f'{user.mention} birthday is on {result['birthday']}')
-            # TODO: If you have finally fix it. Clear this TODO comment.
             user_id = int(ctx.author.id)
             result = supabase.from_("birthdays").select('*').eq('user_id', user_id).execute()
-            if result:
-                user = await self.bot.fetch_user(user_id)
-                await ctx.send(f'{user.mention} birthday is on {result['birthday']}')
+            print(result)
+            user = await self.client.fetch_user(user_id)
+            bday = result.data[0]['birthday']
+            await BaseEmbed(ctx, f'{user.name} birthday is on {TimeToBirthdate(bday)}')
+            CogAlert(ctx.author.name)
         except Exception as e:
-            if str(e) == 'Database offline':
-                await ctx.send("Sorry. The database currently is offline. You can ping the author of this bot, for further information.\nMost of the time when the database is offline, because the author shut it down.")
-            else:
-                print(e)
-
+            await RaiseDBError(ctx, e)
+            
 async def setup(client):
-    await client.add_cog(ShowBirthday(client))
+    cog = ShowBirthday(client)
+    await client.add_cog(cog)

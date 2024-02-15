@@ -7,6 +7,7 @@ project_root = os.getenv('PROJECT_ROOT')
 sys.path.insert(0, project_root)
 from source.data.db import supabase  # Knowing that db.py is in the source/data directory
 from datetime import datetime
+from source.bot.utils import CogAlert, BaseEmbed, RaiseDBError
 
 class SetBirthday(commands.Cog):
     def __init__(self, client):
@@ -15,18 +16,15 @@ class SetBirthday(commands.Cog):
     @commands.command()
     async def setbirthday(self, ctx, *, date: str):
         try:
-            birthday = datetime.strptime(date, '%d-%m-%Y').date()
+            datetime.strptime(date, '%d-%m')
 
-            # Insert or update the birthday in the database
             user_id = str(ctx.author.id)
-            result = supabase.table("birthdays").insert({"user_id": user_id, "birthday": birthday.isoformat()}).execute()
+            result = supabase.table("birthdays").insert({"user_id": user_id, "birthday": date}).execute()
             if result:
-                await ctx.send(f'Birthday set to {birthday}!')
+                await BaseEmbed(ctx, 'Birthday set!', f'Birthday set to {date}!')
+                CogAlert(ctx.author.name)
         except Exception as e:
-            if str(e) == 'Database offline':
-                await ctx.send("Sorry. The database currently is offline. You can ping the author of this bot, for further information.\nMost of the time when the database is offline, because the author shut it down.")
-            else:
-                print(e)
-
+            await RaiseDBError(ctx, e)
+            
 async def setup(client):
     await client.add_cog(SetBirthday(client))

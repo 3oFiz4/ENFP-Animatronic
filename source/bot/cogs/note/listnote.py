@@ -7,7 +7,7 @@ load_dotenv()
 project_root = os.getenv('PROJECT_ROOT')
 sys.path.insert(0, project_root)
 from source.data.db import supabase  # Knowing that db.py is in the source/data directory
-
+from source.bot.utils import CogAlert, BaseEmbed, RaiseDBError
 class ListNote(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -16,7 +16,6 @@ class ListNote(commands.Cog):
     async def listnote(self, ctx):
         try:
             result = supabase.from_("Notes").select('*').eq('user_id', int(ctx.author.id)).execute()
-            print(result)
             notes = result.data
             notes_str = ""
             for note in notes:
@@ -31,13 +30,12 @@ class ListNote(commands.Cog):
                     updated_at_str = updated_at.strftime('%d/%m/%Y %H:%M:%S')
                 notes_str += f"> **Note ID**: {note['id']}\n> **Content**: {note['content']}\n> **Created at**: {created_at_str}\n> **Updated at**: {updated_at_str}\n\n"
             try:
-                await ctx.send(notes_str)
+                await BaseEmbed(ctx, 'Note list', notes_str)
+                CogAlert(ctx.author.name)
             except Exception as e:
                 print(f"An error occurred: {e}")
         except Exception as e:
-            if str(e) == 'Database offline':
-                await ctx.send("Sorry. The database currently is offline. You can ping the author of this bot, for further information.\nMost of the time when the database is offline, because the author shut it down.")
-
+            await RaiseDBError(ctx, e)
 
 async def setup(client):
     await client.add_cog(ListNote(client))
