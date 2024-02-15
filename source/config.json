@@ -12,5 +12,14 @@
     "BIRTHDAY": {
         "BIRTHDAY_ANNOUCE_CHANNEL": 1207277637395939388,
         "BIRTHDAY_ANNOUNCE_MESSAGE": ":tada::tada::tada: Say happy Birthday, to our dear friend {birthday_user}! :tada::tada::tada:\nhttps://tenor.com/view/cat-birthday-happy-birthday-grumpy-upset-gif-9081139335773074969"
+    },
+    "SHIP": {
+        "POSSIBLE_BACKGROUND": [
+            "https://img.freepik.com/free-vector/set-torii-gates-water_52683-44986.jpg",
+            "https://img.freepik.com/free-vector/blurred-valentine-s-day-wallpaper_23-2148819570.jpg",
+            "https://img.freepik.com/premium-vector/valentines-day-background-design-love-background-design_8499-2326.jpg",
+            "https://img.freepik.com/free-photo/silhouetted-couple-sit-bench-autumn-tree-generative-ai_188544-12574.jpg",
+            "https://img.freepik.com/free-photo/3d-sunset-landscape-with-cherry-tree-against-sunset-sky_1048-6809.jpg"
+        ]
     }
 }

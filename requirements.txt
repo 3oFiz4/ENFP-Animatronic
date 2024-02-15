@@ -2,3 +2,5 @@ discord.py
 python-dotenv
 supabase
 rich
+pillow
+httpx
