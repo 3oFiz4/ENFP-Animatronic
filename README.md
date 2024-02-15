@@ -11,7 +11,8 @@ Here's what we're cooking up:
 - [ ] Commands: The magic words to make our bot do its thing. 🗣️
 
 Stay tuned, it's about to get lit! 🔥"!
-
+## UPDATE TODO
+![image](https://github.com/DaemonPooling/ENFP-Animatronic/assets/157283533/5467b4a5-58e7-4108-ba38-e9333ef93a72)
 ## 🌈 What's Inside?
 - **maincog.py:** This is a test command, to see if the Discord cogs working as expected or not.
 - **addnote.py** This is a command for adding a note. Such command can be described below.
