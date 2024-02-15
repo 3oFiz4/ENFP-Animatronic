@@ -1,4 +1,4 @@
-{
+{   "COMMAND_PREFIX": ";",
     "ON_READY": {
         "PRESENCE_MESSAGE": "A cool ENFP bot :3"
     },

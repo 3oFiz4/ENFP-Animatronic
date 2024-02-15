@@ -8,10 +8,10 @@ import asyncio as io
 import json
 from rich import print as log
 # === MODULE END === #
+with open("../config.json") as f:config = json.load(f)
 intents=discord.Intents.default()
 intents.message_content = True
-Host = commands.Bot(command_prefix=">", intents=intents)
-with open("../config.json") as f:config = json.load(f)
+Host = commands.Bot(command_prefix=config["COMMAND_PREFIX"], intents=intents)
 load_dotenv()  # Retrieve environment variables from .env.
 TOKEN = os.getenv("YOUR_BOT_ACCOUNT_TOKEN")
 
