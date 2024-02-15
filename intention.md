@@ -2,7 +2,7 @@ The ENFP Animatronic (Bubblegum) is designed to ...  <-- Nakiwa uhm you get the 
 
 <h2>user account</h2>
 Bubblegum stores the following user information:
-- Birthday
+- Birthday (marked done)
 - personality types & enneagrams1
 - favorites:
   - food

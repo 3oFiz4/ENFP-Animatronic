@@ -42,6 +42,38 @@ Stay tuned, it's about to get lit! 🔥"!
 # example
 >removenote 6 # will remove the note with id of 6.
 ```
+- **track-birthday.py** This is **NOT A COMMAND**, it's a tracker to track everyone birthday!
+
+- **show-birthday.py** This is a command for show anyone's birthday
+```bash
+>showbirthday USER_ID
+
+# example
+>showbirthday 901404605336916018
+```
+- **set-birthday.py** This is a command to set your birthday
+```bash
+>showbirthday [DATE: Format(%d-%m)]
+
+# example
+>showbirthday 03-03 # set ur birthday on 3 March.
+```
+
+- **list-birthday.py** This is a command to list everyone birthday in order
+```bash
+>listbirthday
+
+# example
+>listbirthday 
+```
+
+- **forget-birthday.py** This is a command to remove your birthday.. but... why :(?
+```bash
+>forgetbirthday
+
+# example
+>forgetbirthday 
+```
 
 We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
 
@@ -69,12 +101,32 @@ SUPABASE_URL="YOUR_SUPABASE_URL"
 SUPABASE_KEY="YOUR_SUPABASE_KEY"
 ```
 
-5. **Locate through source directory:**
+5. **You can modify the script configuration aswell! on (source/config.json)** 
+```js
+{
+    "ON_READY": {
+        "PRESENCE_MESSAGE": "A cool ENFP bot :3! This bot serve of ENFP MBti only! Outside ENFP is shushh!11"
+    },
+    "EVERY_EMBED_COLOR": {
+        "COLOR_IN_RGB": {
+            "R": 0,
+            "G": 200,
+            "B": 255
+        }
+    },
+    "BIRTHDAY": {
+        "BIRTHDAY_ANNOUCE_CHANNEL": CHANNEL_WHERE_BIRTHDAY_WILL_BE_ANNOUNCED,
+        "BIRTHDAY_ANNOUNCE_MESSAGE": ":tada::tada::tada: Say happy Birthday, to our dear friend {birthday_user}! :tada::tada::tada:\nhttps://tenor.com/view/cat-birthday-happy-birthday-grumpy-upset-gif-9081139335773074969"
+    }
+}
+```
+
+6. **Locate through source directory:**
 ```bash
 cd source/bot
 ```
 
-6. **Run bot.py:**
+7. **Run bot.py:**
 ```bash
 python bot.py
 ```
