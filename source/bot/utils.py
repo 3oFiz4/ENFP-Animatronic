@@ -3,7 +3,8 @@ from rich import print as log
 import inspect
 import discord
 import json
-
+import os
+from dotenv import load_dotenv
 
 with open("../config.json") as f:
     config = json.load(f)

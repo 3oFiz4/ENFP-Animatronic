@@ -7,7 +7,7 @@ class ping(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        await BaseEmbed(ctx, 'Hola', 'A hola message.')
+        await BaseEmbed(ctx, 'Hola', f'A hola message.')
 
 async def setup(client):
     await client.add_cog(ping(client))

@@ -7,6 +7,7 @@ from discord.ext import commands
 import asyncio as io
 import json
 from rich import print as log
+import concurrent.futures
 # === MODULE END === #
 with open("../config.json") as f:config = json.load(f)
 intents=discord.Intents.default()
@@ -26,15 +27,19 @@ async def on_ready():
 # Walk through the `cogs` folder, and for every sub-directory, if there is a .py format file, will be load the Cogs.
 @Host.event
 async def setup_hook():
-    root_dir = os.path.dirname(os.path.abspath(__file__))
-    cogs_dir = os.path.join(root_dir, 'cogs')
-    for root, dirs, files in os.walk(cogs_dir):
-        for file in files:
-            if file.endswith('.py'):
-                path = os.path.join(root, file)
-                module = path.replace(os.sep, '.')[len(root_dir)+1:-3]
-                await Host.load_extension(module)
-                log(f"[cyan bold]COG LOADED[/] [purple]{module}[/]")
+    main_dir = os.path.dirname(os.path.abspath(__file__))
+    cogs_dir = os.path.join(main_dir, 'cogs')
+
+    async def load_extension(module):
+        await Host.load_extension(module)
+        log(f"[cyan bold]COG LOADED[/] [purple]{module}[/]")
+
+    tasks_load = [load_extension(os.path.join(root, file).replace(os.sep, '.')[len(main_dir)+1:-3])
+             for root, dirs, files in os.walk(cogs_dir) 
+             for file in files if file.endswith('.py')]
+
+    await io.gather(*tasks_load)
+
 
 # Run the token.
 Host.run(TOKEN)    
