@@ -4,3 +4,4 @@ supabase
 rich
 pillow
 httpx
+openai==0.28

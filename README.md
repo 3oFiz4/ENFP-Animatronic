@@ -63,11 +63,16 @@ pip install -r requirements.txt
 ```
 
 4. **Create and configure the environment variables (.env): (I assume you know how to do this)**
-```
+```py
+# Remove any comment that start with hashtags!
+
 PROJECT_ROOT="YOUR_PROJECT_ABSOLUTE_PATH"
 YOUR_BOT_ACCOUNT_TOKEN="YOUR_BOT_TOKEN"
 SUPABASE_URL="YOUR_SUPABASE_URL"
 SUPABASE_KEY="YOUR_SUPABASE_KEY"
+AI_API_KEY="YOUR_API_KEY" # Optional, but you cannot run `>askenfp`
+AI_API_BASE="YOUR_API_ENDPOINT" # Optional, but you cannot run `>askenfp`
+AI_MODEL="YOUR_AI_MODEL" # Optional, but you cannot run `>askenfp`
 ```
 
 5. **You can modify the script configuration aswell! on (source/config.json)** 
