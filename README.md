@@ -14,68 +14,37 @@ Stay tuned, it's about to get lit! 🔥"!
 ## UPDATE TODO
 ![image](https://github.com/DaemonPooling/ENFP-Animatronic/assets/157283533/5467b4a5-58e7-4108-ba38-e9333ef93a72)
 ## 🌈 What's Inside?
-- **maincog.py:** This is a test command, to see if the Discord cogs working as expected or not.
-- **addnote.py** This is a command for adding a note. Such command can be described below.
-```bash
->addnote "YOUR_TEXT"
+- **cogs/note** This is a list of command for adding a note.
+- **cogs/birthday** This is a list of command for handling and tracking a birthday.
+- **cogs/misc** This is a list of command for handling and tracking a birthday.
+- **cogs/matching** This is a list of command for matching user with another user command.
+### Command list:
+```python
+# WE ARE ASSUMING, WE ARE USING ";" AS THE COMMAND'S PREFIX
 
-# example
->addnote "This is a note"
+# Notes related commands:
+>addnote [TEXT:str] ## Add a note 
+>editnote [NOTE_ID:int] [TEXT:str] ## Edit a specific note id's content
+>listnote ## List your note
+>removenote [NOTE_ID:int] ## Remove a specific note id
+
+# Birthday related commands:
+>showbirthday [USER_ID:int] ## Show anyone's birthday
+## e.g. `>showbirthday 901404605336916018`
+>setbirthday [DATE: Format(%d-%m)] ## Set your birthday
+## e.g. `>setbirthday 03-03` will give 3 March
+>listbirthday ## List everyone birthday in order
+>forgetbirthday ## Remove your birthday from the D
+
+# Misc related commands:
+>sing [ARTIST:str] [MUSIC_NAME:str] [DELAY:int] [SING_TOGETHER: 1 | 0] ## Sing a specific song with/without a bot.
+>texttosha256 [TEXT:str] ## Encrypt text to SHA256
+
+# Matching related commands:
+## discord.User is a datatype, which you can trigger using @[USERNAME]
+>ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
+## e.g. `>ship @Nakiwa @Cleo`
 ```
-- **editnote.py** This is a command for edit a note. Such command can be described below.
-```bash
->editnote YOUR_NOTE_ID "YOUR_TEXT"
-
-# example
->editnote 6 "The new note"
-```
-- **listnote.py** This is a command for list a notes. Such command can be described below.
-```bash
->listnote
-
-# example
->listnote
-```
-- **removenote.py** This is a command for remove a note. Such command can be described below.
-```bash
->removenote YOUR_NOTE_ID
-
-# example
->removenote 6 # will remove the note with id of 6.
-```
-- **track-birthday.py** This is **NOT A COMMAND**, it's a tracker to track everyone birthday!
-
-- **show-birthday.py** This is a command for show anyone's birthday
-```bash
->showbirthday USER_ID
-
-# example
->showbirthday 901404605336916018
-```
-- **set-birthday.py** This is a command to set your birthday
-```bash
->showbirthday [DATE: Format(%d-%m)]
-
-# example
->showbirthday 03-03 # set ur birthday on 3 March.
-```
-
-- **list-birthday.py** This is a command to list everyone birthday in order
-```bash
->listbirthday
-
-# example
->listbirthday 
-```
-
-- **forget-birthday.py** This is a command to remove your birthday.. but... why :(?
-```bash
->forgetbirthday
-
-# example
->forgetbirthday 
-```
-
 We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
 
 ## 📜 Instructions:
@@ -103,24 +72,6 @@ SUPABASE_KEY="YOUR_SUPABASE_KEY"
 ```
 
 5. **You can modify the script configuration aswell! on (source/config.json)** 
-```js
-{
-    "ON_READY": {
-        "PRESENCE_MESSAGE": "A cool ENFP bot :3! This bot serve of ENFP MBti only! Outside ENFP is shushh!11"
-    },
-    "EVERY_EMBED_COLOR": {
-        "COLOR_IN_RGB": {
-            "R": 0,
-            "G": 200,
-            "B": 255
-        }
-    },
-    "BIRTHDAY": {
-        "BIRTHDAY_ANNOUCE_CHANNEL": CHANNEL_WHERE_BIRTHDAY_WILL_BE_ANNOUNCED,
-        "BIRTHDAY_ANNOUNCE_MESSAGE": ":tada::tada::tada: Say happy Birthday, to our dear friend {birthday_user}! :tada::tada::tada:\nhttps://tenor.com/view/cat-birthday-happy-birthday-grumpy-upset-gif-9081139335773074969"
-    }
-}
-```
 
 6. **Locate through source directory:**
 ```bash
