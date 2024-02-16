@@ -3,12 +3,6 @@ Yo, what's good? Welcome to the home of the most chaotic, fun-loving Discord bot
 
 This bot is all about bringing the party to our server with minigames, surprises, and a whole lot more. It's like having a virtual party animal right in your chat! 🎮🎈
 
-Here's what we're cooking up:
-
-- [ ] Prep Time: Getting all our ducks in a row before the real fun begins. 🦆
-- [ ] The Big Idea: Brainstorming all the wild things this bot will be able to do. 💡
-- [ ] File Structure: Organizing our bot's brain so it can keep up with us. 🗂️
-- [ ] Commands: The magic words to make our bot do its thing. 🗣️
 
 Stay tuned, it's about to get lit! 🔥"!
 ## UPDATE TODO
@@ -18,34 +12,39 @@ Stay tuned, it's about to get lit! 🔥"!
 - **cogs/birthday** This is a list of command for handling and tracking a birthday.
 - **cogs/misc** This is a list of command for handling and tracking a birthday.
 - **cogs/matching** This is a list of command for matching user with another user command.
-### Command list:
-```python
-# WE ARE ASSUMING, WE ARE USING ";" AS THE COMMAND'S PREFIX
+<details>
+  <summary>Command list:</summary>
+  
+  ```python
+    # WE ARE ASSUMING, WE ARE USING ";" AS THE COMMAND'S PREFIX
 
-# Notes related commands:
->addnote [TEXT:str] ## Add a note 
->editnote [NOTE_ID:int] [TEXT:str] ## Edit a specific note id's content
->listnote ## List your note
->removenote [NOTE_ID:int] ## Remove a specific note id
+    # Notes related commands:
+    >addnote [TEXT:str] ## Add a note 
+    >editnote [NOTE_ID:int] [TEXT:str] ## Edit a specific note id's content
+    >listnote ## List your note
+    >removenote [NOTE_ID:int] ## Remove a specific note id
 
-# Birthday related commands:
->showbirthday [USER_ID:int] ## Show anyone's birthday
-## e.g. `>showbirthday 901404605336916018`
->setbirthday [DATE: Format(%d-%m)] ## Set your birthday
-## e.g. `>setbirthday 03-03` will give 3 March
->listbirthday ## List everyone birthday in order
->forgetbirthday ## Remove your birthday from the D
+    # Birthday related commands:
+    >showbirthday [USER_ID:int] ## Show anyone's birthday
+    ## e.g. `>showbirthday 901404605336916018`
+    >setbirthday [DATE: Format(%d-%m)] ## Set your birthday
+    ## e.g. `>setbirthday 03-03` will give 3 March
+    >listbirthday ## List everyone birthday in order
+    >forgetbirthday ## Remove your birthday from the D
 
-# Misc related commands:
->sing [ARTIST:str] [MUSIC_NAME:str] [DELAY:int] [SING_TOGETHER: 1 | 0] ## Sing a specific song with/without a bot.
->texttosha256 [TEXT:str] ## Encrypt text to SHA256
+    # Misc related commands:
+    >sing [ARTIST:str] [MUSIC_NAME:str] [DELAY:int] [SING_TOGETHER: 1 | 0] ## Sing a specific song with/without a bot.
+    >texttosha256 [TEXT:str] ## Encrypt text to SHA256
 
-# Matching related commands:
-## discord.User is a datatype, which you can trigger using @[USERNAME]
->ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
-## e.g. `>ship @Nakiwa @Cleo`
+    # Matching related commands:
+    ## discord.User is a datatype, which you can trigger using @[USERNAME]
+    >ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
+    ## e.g. `>ship @Nakiwa @Cleo`
 ```
-We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
+    We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
+</details>
+
+
 
 ## 📜 Instructions:
 1. **Clone the repository:**
