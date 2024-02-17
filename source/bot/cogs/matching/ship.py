@@ -7,13 +7,20 @@ import asyncio as IO
 import httpx, aiohttp
 import random
 import json
+import math
+import numpy as np
 with open("../config.json") as f:config = json.load(f)
 
 class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDFSDFSDFSDFGDFGDFGRET
     def __init__(self, client):
         self.client = client
-
+    
     def name_compatibility(self, name1, name2):
+        def det(a, b):
+            input_string = str(a) + ',' + str(b)
+            random.seed(hash(input_string))
+            return random.uniform(a, b)
+        
         def Lev_distance(name1, name2):
             matrix = [[0 for j in range(len(name2) + 1)] for i in range(len(name1) + 1)]
             for i in range(len(name1) + 1):
@@ -70,14 +77,11 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
         score_consonants = 100 - perc_consonants
         score_syllables = 100 - perc_syllables
         Lev = Lev_distance(name1, name2)
+        Lev_normalized = Lev / max(len(name1), len(name2)) * 100
         # Average the compatibility scores for all parameters to get the final compatibility score
-        final_score = (score_letters + score_vowels + score_consonants + score_syllables + Lev) / 5
-        name_sim = 100 - Lev
-        score_weight = 0.8
-        name_weight = 0.2
-        total_weight = score_weight + name_weight
-        love_score = (final_score * score_weight + name_sim * name_weight) / total_weight
-        return love_score
+        final_score = (det(score_letters, perc_letters) + det(score_vowels, perc_vowels) + det(score_consonants, perc_consonants) + det(score_syllables, perc_syllables) + det(Lev_normalized, Lev)) / 5
+        name_sim = 100 - Lev_normalized
+        return det(final_score, name_sim)
     # TODO: Add a condition, and a different effect, suppose that the name_compatibility is lower than 50%, we can put
     # TODO: broken heart, and so, if name_compatibility is lower than 0%, we change background image to graveyard
     # TODO: and so if it is 100% put mini hearts above the head.

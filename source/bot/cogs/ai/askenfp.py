@@ -22,11 +22,11 @@ class AskENFP(commands.Cog):
     @commands.command()
     async def askenfp(self, ctx, *, text: str):
         try:
-            completion = await ai.ChatCompletion.create(
+            completion = ai.ChatCompletion.create(
                 model=ai_model,
                 messages=[
                     {"role": "system", "content": 
-                        "Use casual tone, short messages, irony and sarcasm if wanted."
+                        "Your name is Daisy. You should reply in a way how an ENFP MBTI personality talks. Reply and Use casual tone, short messages"
                     },
                     {"role": "user", "content": text}
                 ]

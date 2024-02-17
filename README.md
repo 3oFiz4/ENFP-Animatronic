@@ -36,11 +36,16 @@ Stay tuned, it's about to get lit! 🔥"!
     # Misc related commands:
     >sing [ARTIST:str] [MUSIC_NAME:str] [DELAY:int] [SING_TOGETHER: 1 | 0] ## Sing a specific song with/without a bot.
     >texttosha256 [TEXT:str] ## Encrypt text to SHA256
+    >clear [NUMBER_OF_MESSAGES:int] ## Delete [NUMBER_OF_MESSAGES] above.
+    >clear_until [MESSAGE:ID] ## Delete every messages, until a message with the same message_ID are found, it will stop deleting.
 
     # Matching related commands:
     ## discord.User is a datatype, which you can trigger using @[USERNAME]
     >ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
     ## e.g. `>ship @Nakiwa @Cleo`
+
+    # AI Related commands:
+    >askenfp [TEXT:str] ## It simply give the GPT a text, which will be output to current channel.
 
     # Debate related commands:
     >helpdebate # Explain how to use the command. I suggest run this command first, before playing with the commands.

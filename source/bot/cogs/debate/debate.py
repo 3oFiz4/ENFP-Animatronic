@@ -12,24 +12,35 @@ class Debate(commands.Cog):
         self.turn = 0
         self.locked = False
         self.sealed = False
+        self.debate_role = None
         
     @commands.Cog.listener()
     async def on_message(self, ctx):
+        if ctx.channel.id != config["DEBATE"]["DEBATE_CHANNEL"]:
+            return
+        
         try:
             if (
                 self.locked and 
                 ctx.author != self.client.user and 
-                not ctx.content.startswith(config["COMMAND_PREFIX"]) and
+                not ctx.content.split()[0] in [
+                    f'{config["COMMAND_PREFIX"]}join', 
+                    f'{config["COMMAND_PREFIX"]}startdebate', 
+                    f'{config["COMMAND_PREFIX"]}nextturn', 
+                    f'{config["COMMAND_PREFIX"]}enddebate'
+                ] and 
                 ctx.author != self.participants[self.turn]
                 ):
-                await ctx.author.send(f'Please use `{config["COMMAND_PREFIX"]}join` to participate in the debate.')
                 await ctx.delete()
+                await ctx.author.send(f'Please use `{config["COMMAND_PREFIX"]}join` to participate in the debate.', delete_after=10)
+
             elif (
+                ctx.author != self.client.user and
                 not ctx.content.startswith(config["COMMAND_PREFIX"]) and 
                 ctx.author != self.participants[self.turn]
                 ):
-                await ctx.author.send('It\'s not your turn yet.', delete_after=10)
                 await ctx.delete()
+                await ctx.author.send('It\'s not your turn yet.', delete_after=10)
         except Exception as e:
             pass
 
@@ -40,6 +51,7 @@ class Debate(commands.Cog):
         self.turn = 0
         self.locked = True
         self.sealed = False
+        self.debate_role = await ctx.guild.create_role(name="Debate Participant")
         await BaseEmbed(ctx, f'A new debate on "{topic}" has started!', Desc=f'Use `{config["COMMAND_PREFIX"]}join` to participate.')
         CogAlert(f"{ctx.author.name} (TOPIC: {topic})")
     
@@ -47,8 +59,10 @@ class Debate(commands.Cog):
     async def join(self, ctx):
         if self.locked and not self.sealed and ctx.author not in self.participants:
             self.participants.append(ctx.author)
+            await ctx.author.add_roles(self.debate_role)
             await BaseEmbed(ctx, f'{ctx.author.name} joined the debate.')
         else:
+            await ctx.delete()
             await BaseEmbed(ctx, 'You have already joined the debate, no debate has started, or the debate is sealed.', Color=(255,0,0))
     
     # btw `pass` is a used word by python syntax, thats why its _pass
@@ -65,17 +79,23 @@ class Debate(commands.Cog):
     async def seal(self, ctx):
         if ctx.author == self.participants[0]:
             self.sealed = True
+            await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
+            await ctx.channel.set_permissions(self.debate_role, send_messages=True)
             await BaseEmbed(ctx, 'Debate sealed!', 'The debate has been sealed. No more participants can join.')
         else:
-            await BaseEmbed(ctx, 'Insufficient permission', 'Only the user who started the debate can seal it.', Color=(255,0,0))
+            await ctx.delete()
+            await ctx.author.send('Insufficient permission\nOnly the user who started the debate can seal it.')
 
     @commands.command()
     async def unseal(self, ctx):
         if ctx.author == self.participants[0]:
             self.sealed = False
+            await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
+            await ctx.channel.set_permissions(self.debate_role, send_messages=True)
             await BaseEmbed(ctx, 'Debate unsealed!', 'The debate has been unsealed. Any participants can join now.')
         else:
-            await BaseEmbed(ctx, 'Insufficient permission', 'Only the user who started the debate can unseal it.', Color=(255,0,0))
+            await ctx.delete()
+            await ctx.author.send('Insufficient permission\nOnly the user who started the debate can unseal it.')
 
     @commands.command()
     async def end(self, ctx):
@@ -84,6 +104,10 @@ class Debate(commands.Cog):
         self.turn = 0
         self.locked = False
         self.sealed = False
+        role = discord.utils.get(ctx.message.guild.roles, name="Debate Participant")
+        await role.delete()
+        await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
+        self.debate_role = None
         await BaseEmbed(ctx, "Debate ended.", Desc=f"Ended by {ctx.author.mention}", Color=(255,0,0))
     
     @commands.command()
