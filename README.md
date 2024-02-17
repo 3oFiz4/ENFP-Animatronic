@@ -38,6 +38,14 @@ Stay tuned, it's about to get lit! 🔥"!
     >texttosha256 [TEXT:str] ## Encrypt text to SHA256
     >clear [NUMBER_OF_MESSAGES:int] ## Delete [NUMBER_OF_MESSAGES] above.
     >clear_until [MESSAGE:ID] ## Delete every messages, until a message with the same message_ID are found, it will stop deleting.
+    >log_until [MESSAGE:ID] [TUPLE_LIKE_IN_STRING]
+    ## The parameter in TUPLE_LIKE_IN_STRING are below:
+    ## (1st param) show_author = 1
+    ## (2nd param) show_author_id = 1
+    ## (3rd param) show_msg = 1
+    ## (4th param) show_msg_id = 1
+    ## (5th param) show_msg_created_at = 1
+    ## e.g. `>log_until "1207784045661130819" "(1, 0, 1, 0, 0)" `
 
     # Matching related commands:
     ## discord.User is a datatype, which you can trigger using @[USERNAME]
