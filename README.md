@@ -12,6 +12,7 @@ Stay tuned, it's about to get lit! 🔥"!
 - **cogs/birthday** This is a list of command for handling and tracking a birthday.
 - **cogs/misc** This is a list of command for handling and tracking a birthday.
 - **cogs/matching** This is a list of command for matching user with another user command.
+- **cogs/debate** This is a list of command for dealing with a One-Turn-Based debate.
 <details>
   <summary>Command list:</summary>
   
@@ -40,6 +41,16 @@ Stay tuned, it's about to get lit! 🔥"!
     ## discord.User is a datatype, which you can trigger using @[USERNAME]
     >ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
     ## e.g. `>ship @Nakiwa @Cleo`
+
+    # Debate related commands:
+    >helpdebate # Explain how to use the command. I suggest run this command first, before playing with the commands.
+    >topic [TOPIC:str] # Start a debate regarding the topic.
+    # e.g. `;topic Why US's human rights is collapsed`
+    >join # Join a debate, if only the debate is unsealed.
+    >pass # Let next participant have a speak, after yours.
+    >seal # Seal the debate, so no one can join.
+    >unseal # Unseal the debate, so anyone can join. You'll use this after you `>seal` the debate. 
+    >end # End the debate.
 ```
     We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
 </details>
