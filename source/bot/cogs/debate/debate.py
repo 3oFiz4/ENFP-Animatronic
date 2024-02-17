@@ -33,7 +33,6 @@ class Debate(commands.Cog):
                 ):
                 await ctx.delete()
                 await ctx.author.send(f'Please use `{config["COMMAND_PREFIX"]}join` to participate in the debate.', delete_after=10)
-
             elif (
                 ctx.author != self.client.user and
                 not ctx.content.startswith(config["COMMAND_PREFIX"]) and 
@@ -61,6 +60,7 @@ class Debate(commands.Cog):
             self.participants.append(ctx.author)
             await ctx.author.add_roles(self.debate_role)
             await BaseEmbed(ctx, f'{ctx.author.name} joined the debate.')
+            CogAlert(f"{ctx.author.name} joined a debate. ")
         else:
             await ctx.delete()
             await BaseEmbed(ctx, 'You have already joined the debate, no debate has started, or the debate is sealed.', Color=(255,0,0))
@@ -71,6 +71,7 @@ class Debate(commands.Cog):
         if ctx.author == self.participants[self.turn]:
             self.turn = (self.turn + 1) % len(self.participants)
             await BaseEmbed(ctx, f"It's {self.participants[self.turn].name}'s turn to speak.")
+            CogAlert(f"{ctx.author.name} turns to debate.")
         else:
             await ctx.delete()
             await ctx.author.send("Only the current speaker can pass the turn.")
@@ -82,6 +83,7 @@ class Debate(commands.Cog):
             await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
             await ctx.channel.set_permissions(self.debate_role, send_messages=True)
             await BaseEmbed(ctx, 'Debate sealed!', 'The debate has been sealed. No more participants can join.')
+            CogAlert(f"{ctx.author.name} sealed the debate.")
         else:
             await ctx.delete()
             await ctx.author.send('Insufficient permission\nOnly the user who started the debate can seal it.')
@@ -93,6 +95,7 @@ class Debate(commands.Cog):
             await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
             await ctx.channel.set_permissions(self.debate_role, send_messages=True)
             await BaseEmbed(ctx, 'Debate unsealed!', 'The debate has been unsealed. Any participants can join now.')
+            CogAlert(f"{ctx.author.name} unsealed to debate.")
         else:
             await ctx.delete()
             await ctx.author.send('Insufficient permission\nOnly the user who started the debate can unseal it.')
@@ -109,6 +112,7 @@ class Debate(commands.Cog):
         await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
         self.debate_role = None
         await BaseEmbed(ctx, "Debate ended.", Desc=f"Ended by {ctx.author.mention}", Color=(255,0,0))
+        CogAlert(f"{ctx.author.name} ended the debate")
     
     @commands.command()
     async def helpdebate(self, ctx):
@@ -126,6 +130,7 @@ class Debate(commands.Cog):
 4. If you do not wanting any member to participate the debate, you can run `;seal`. Otherwise, if you have run `;seal` before, and you want anyone to participate, you can run `;unseal`
 5. To end the debate, both participants should agreed, and any participant can trigger `;end` to end a debate.
 """, Color=(0,255,0))
+        CogAlert(f"{ctx.author.name} triggered helpdebate.")
         
 async def setup(client):
     await client.add_cog(Debate(client))
