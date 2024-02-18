@@ -4,6 +4,8 @@ import openai as ai
 from dotenv import load_dotenv
 from discord.ext import commands
 from rich import print as log
+from inspect import getmembers, isclass
+from sys import modules
 load_dotenv()
 
 # Load these once when your bot starts up
@@ -41,4 +43,6 @@ class AskENFP(commands.Cog):
             log(f'[red bold]AskENFP Command failed to run.\nERR: {ERR}[/]\n[#FFFF00]Have you provided a correct API Endpoint and API key?[/]')
 
 async def setup(client):
-    await client.add_cog(AskENFP(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

@@ -1,7 +1,9 @@
-import discord
 from discord.ext import commands
 from source.bot.utils import BaseEmbed, CogAlert
-import hashlib, itertools
+import hashlib
+from inspect import getmembers, isclass
+from sys import modules
+
 class SHA256Crypt(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -15,4 +17,6 @@ class SHA256Crypt(commands.Cog):
         CogAlert(ctx.author.name)
 
 async def setup(client):
-    await client.add_cog(SHA256Crypt(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

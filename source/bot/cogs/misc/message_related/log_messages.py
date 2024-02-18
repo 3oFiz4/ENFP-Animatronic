@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from inspect import getmembers, isclass
+from sys import modules
 
 class LogMessages(commands.Cog):
     def __init__(self, client):
@@ -26,4 +28,6 @@ class LogMessages(commands.Cog):
         await ctx.author.send(file=discord.File(file_name)) # send the file to the person who triggered the command
 
 async def setup(client):
-    await client.add_cog(LogMessages(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

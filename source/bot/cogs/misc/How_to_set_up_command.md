@@ -5,18 +5,33 @@ The name for the command can be anything! But it has to be understandable!
 ```python
 import discord
 from discord.ext import commands
-
-class [COMMAND_NAME](commands.Cog):
+from source.bot.utils import BaseEmbed
+from inspect import getmembers, isclass
+from sys import modules
+class [CLASS_NAME](commands.Cog):
     def __init__(self, client):
-        self.client = client #! Do not remove  this.
-        # You can add more variables if you want. 
+        self.client = client
 
     @commands.command()
-    async def [COMMAND_NAME](self, ctx):
-        # Add your code here...
-        await ctx.send('Pong!') # This is a example script. You can create your own if you want.
+    async def ping(self, ctx):
+        # Your code.
 
-# The set-up for the cog command.
+async def setup(client):
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))
+```
+
+UPDATE: I refactor all commands in the cog and replace this code below:
+```py
 async def setup(client):
     await client.add_cog([COMMAND_NAME](client))
+```
+
+WITH below, so you dont have to restate the class name. But there are other occasion where you need to apply the script above. If a command doesn't work. Often times, The class cannot be instantiated with the client as an argument.
+```py
+async def setup(client):
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))
 ```

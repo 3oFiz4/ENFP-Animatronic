@@ -1,6 +1,8 @@
 import discord, json
 from discord.ext import commands
 from source.bot.utils import BaseEmbed, CogAlert
+from inspect import getmembers, isclass
+from sys import modules
 
 with open("../config.json") as f:config = json.load(f)
 
@@ -133,4 +135,6 @@ class Debate(commands.Cog):
         CogAlert(f"{ctx.author.name} triggered helpdebate.")
         
 async def setup(client):
-    await client.add_cog(Debate(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

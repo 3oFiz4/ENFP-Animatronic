@@ -10,6 +10,8 @@ from datetime import datetime
 import asyncio as io
 from source.bot.utils import TaskAlert
 import json
+from inspect import getmembers, isclass
+from sys import modules
 
 with open("../config.json") as f:config = json.load(f)
 
@@ -33,5 +35,6 @@ class CheckBirthday(commands.Cog):
             await io.sleep(86400)
 
 async def setup(client):
-    cog = CheckBirthday(client)
-    await client.add_cog(cog)
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

@@ -8,6 +8,8 @@ sys.path.insert(0, project_root)
 from source.data.db import supabase  # Knowing that db.py is in the source/data directory
 from datetime import datetime
 from source.bot.utils import CogAlert, BaseEmbed, RaiseDBError
+from inspect import getmembers, isclass
+from sys import modules
 
 class SetBirthday(commands.Cog):
     def __init__(self, client):
@@ -27,4 +29,6 @@ class SetBirthday(commands.Cog):
             await RaiseDBError(ctx, e)
             
 async def setup(client):
-    await client.add_cog(SetBirthday(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

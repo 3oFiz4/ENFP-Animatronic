@@ -7,8 +7,6 @@ import asyncio as IO
 import httpx, aiohttp
 import random
 import json
-import math
-import numpy as np
 with open("../config.json") as f:config = json.load(f)
 
 class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDFSDFSDFSDFGDFGDFGRET

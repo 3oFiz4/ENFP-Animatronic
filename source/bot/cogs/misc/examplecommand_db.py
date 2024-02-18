@@ -2,6 +2,8 @@ import os
 import sys
 from dotenv import load_dotenv
 from discord.ext import commands
+from inspect import getmembers, isclass
+from sys import modules
 
 load_dotenv()
 
@@ -30,4 +32,6 @@ class ExampleCommand(commands.Cog):
                 await ctx.send(f"An unexpected error occurred: {e}")
 
 async def setup(client):
-    await client.add_cog(ExampleCommand(client))
+    classes = getmembers(modules[__name__], isclass)
+    main_class = classes[0][1]
+    await client.add_cog(main_class(client))

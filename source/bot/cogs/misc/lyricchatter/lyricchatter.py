@@ -7,17 +7,18 @@ import re # Regexp
 from bs4 import BeautifulSoup # Handling the Input and Output of the website and script.
 import httpx # Handling request
 import asyncio as io # Asynchronous operation
+from inspect import getmembers, isclass
+from sys import modules
 # === MODULE SECTION === #
 
 #! This whole code are copied from https://github.com/DaemonPooling/Discord-lyric-chatter-bot
 #! Which is also my own repository
 
-matchURL = "https://genius.com/{Artist}-{Title}-lyrics" # This is a regexp pattern.
-stop_singing = False
-
 class LyricChatter(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.matchURL = "https://genius.com/{Artist}-{Title}-lyrics" # This is a regexp pattern.
+        self.stop_singing = False
         
     async def GET_SONG_LYRIC(self, ctx, Artist, Title):
         # Convert to equivalent URL match. In this case,
@@ -27,7 +28,7 @@ class LyricChatter(commands.Cog):
         Title = Title.replace(' ', '-').lower()
         
         # Substitue the Artist and Title variable to the {Artist} and {Title}
-        url = matchURL.format(Artist=Artist, Title=Title)
+        url = self.matchURL.format(Artist=Artist, Title=Title)
 
         try:
             async with httpx.AsyncClient() as client:
@@ -75,14 +76,13 @@ class LyricChatter(commands.Cog):
         await ctx.message.delete()  # Delete the user's message
         CogAlert(ctx.author.name)
         # Act as a toggler.
-        global stop_singing
-        stop_singing = False
+        self.stop_singing = False
         # Get the song's lyrics
         song = await self.GET_SONG_LYRIC(ctx, artist, title)
 
         if (together == '1'):
             for i in range(0, len(song), 2):  # Skip lyric by jumping each element by 2. Example, a,c,e,g instead of a,b,c,d,e,f,g
-                if stop_singing:
+                if self.stop_singing:
                     break
                 await ctx.send(song[i])  # Bot sings
                 try:
@@ -109,8 +109,7 @@ class LyricChatter(commands.Cog):
     async def stop(self, ctx):
         await BaseEmbed(ctx, 'Music stopped', Color=(255,0,0))
         CogAlert(ctx.author.name)
-        global stop_singing
-        stop_singing = True
-    
+        self.stop_singing = True
+     
 async def setup(client):
     await client.add_cog(LyricChatter(client))
