@@ -3,6 +3,7 @@ from discord.ext import commands
 from source.bot.utils import BaseEmbed, CogAlert
 from inspect import getmembers, isclass
 from sys import modules
+import unicodedata
 
 with open("../config.json") as f:config = json.load(f)
 
@@ -104,17 +105,39 @@ class Debate(commands.Cog):
 
     @commands.command()
     async def end(self, ctx):
-        self.debate_topic = ''
-        self.participants = []
-        self.turn = 0
-        self.locked = False
-        self.sealed = False
-        role = discord.utils.get(ctx.message.guild.roles, name="Debate Participant")
-        await role.delete()
-        await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
-        self.debate_role = None
-        await BaseEmbed(ctx, "Debate ended.", Desc=f"Ended by {ctx.author.mention}", Color=(255,0,0))
-        CogAlert(f"{ctx.author.name} ended the debate")
+        if self.debate_topic:
+            await BaseEmbed(ctx, "Debate ended.", Desc=f"Ended by {ctx.author.mention}", Color=(255,0,0))
+            # TODO: If you have time, find a way of how to convert text representation of emoji to emoji representation of it and react it to the `Pick_Winner`.
+            # TODO: If you do find a way. Delete the `emoji_representation`.
+            # TODO: I presume that to do this, we need to convert a Unicode representation of the emoji to emoji representation.
+            arr_length = len(self.participants)
+            convincing_str = ""
+            for i, e in enumerate(self.participants):
+                if i < arr_length - 1:
+                    convincing_str += f"**{e}'s**, "
+                else:
+                    convincing_str += f"or **{e}'s**"
+            indexes = ['one', 'second', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'keycap_ten']
+            emoji_representation = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
+            pick_str = ""
+            for i, (e, i) in enumerate(zip(self.participants, indexes)):
+                pick_str += f":{i}: **{e}**\n"
+            # Ignore the fact I call this variable `Pick_Winner`, there is no winner in debate, but there's most convincing in debate.
+            Pick_Winner = await BaseEmbed(ctx, "Which arguments convince you most?", Desc=f"As the debate has ended, let's rate both of our participants' arguments! Which arguments convince you the most, {convincing_str}? Rate below by reacting to this embed!:\n{pick_str}")
+            for i, (e, emoji) in enumerate(zip(self.participants, emoji_representation)):
+                await Pick_Winner.add_reaction(emoji)
+                
+            #===Separator===#
+            self.debate_topic = ''
+            self.participants = []
+            self.turn = 0
+            self.locked = False
+            self.sealed = False
+            role = discord.utils.get(ctx.message.guild.roles, name="Debate Participant")
+            await role.delete()
+            await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=True)
+            self.debate_role = None
+            CogAlert(f"{ctx.author.name} ended the debate")
     
     @commands.command()
     async def helpdebate(self, ctx):

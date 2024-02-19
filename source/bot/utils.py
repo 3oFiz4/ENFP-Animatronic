@@ -36,7 +36,8 @@ async def BaseEmbed(ctx, Title='', Desc='', Color=(config['EVERY_EMBED_COLOR']["
         description=Desc,
         color=discord.Color.from_rgb(*Color)
     )
-    await ctx.send(embed=embed)
+    message = await ctx.send(embed=embed)
+    return message
 
 # Not finished yet. Do not use.
 async def RaiseDBError(ctx, DBError):
