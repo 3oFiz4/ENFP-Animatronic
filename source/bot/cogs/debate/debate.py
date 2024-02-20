@@ -117,7 +117,7 @@ class Debate(commands.Cog):
                     convincing_str += f"**{e}'s**, "
                 else:
                     convincing_str += f"or **{e}'s**"
-            indexes = ['one', 'second', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'keycap_ten']
+            indexes = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'keycap_ten']
             emoji_representation = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
             pick_str = ""
             for i, (e, i) in enumerate(zip(self.participants, indexes)):
