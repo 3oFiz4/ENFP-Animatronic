@@ -82,18 +82,15 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
         final_score = (det(score_letters, perc_letters) + det(score_vowels, perc_vowels) + det(score_consonants, perc_consonants) + det(score_syllables, perc_syllables) + det(Lev_normalized, Lev)) / 5
         name_sim = 100 - Lev_normalized
         return det(final_score, name_sim)
-    # TODO: Add a condition, and a different effect, suppose that the name_compatibility is lower than 50%, we can put
-    # TODO: broken heart, and so, if name_compatibility is lower than 0%, we change background image to graveyard
-    # TODO: and so if it is 100% put mini hearts above the head.
+    # TODO: Rather than actually download each link in an Image, and for the sake of time complexity. User will be prompted to download the images, then store in an assets, and then load the Image. Which benefit a large speeds.
     async def create_image_merger(self, name1, name2, percentage):
         Possible_background = config['SHIP']['POSSIBLE_BACKGROUND']
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session, httpx.AsyncClient() as client:
             async def load_image(url):
-                async with httpx.AsyncClient() as client:
-                    response = await client.get(url)
-                    if response.status_code != 200:
-                        return "Err non-200"
-                    return BytesIO(response.content)
+                response = await client.get(url)
+                if response.status_code != 200:
+                    return "Err non-200"
+                return BytesIO(response.content)
 
             # If Percentage is 100%-80%
             if percentage >= 80:
