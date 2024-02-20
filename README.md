@@ -64,8 +64,28 @@ Stay tuned, it's about to get lit! 🔥"!
     >seal # Seal the debate, so no one can join.
     >unseal # Unseal the debate, so anyone can join. You'll use this after you `>seal` the debate. 
     >end # End the debate.
+
+    # Truth or Dare commands:
+    >dare *[ID:int]
+    >truth *[ID:int]
+    >request [TYPE:Dare | Truth] [TEXT:str]
 ```
     We will add more commands in the future. THis project is still far far far away from complete! So please be patient!
+</details>
+
+<details>
+  <summary>Database table</summary>
+
+  **Incase you are wondering, how the database table should looks like. It should look like this:**
+  ![](./assets/dbname.png)
+
+  **Each table should looks like this:**
+  1. **TABLE/TOD** (Handling Truth or Dare):
+  ![](./assets/dbtod.png)
+  2. **TABLE/birthdays** (Handling birthdays):
+  ![](./assets/dbbday.png)
+  3. **TABLE/notes** (Handling notes):
+  ![](./assets/dbnotes.png)
 </details>
 
 

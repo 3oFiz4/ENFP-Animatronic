@@ -30,12 +30,28 @@ def TaskAlert(func):
     log(f'[green bold]TASK TRIGGERED[/] [purple]{func.__name__}[/] {TimeCurrent()}')
 
 # This is just our main embed. You can custom it though!
-async def BaseEmbed(ctx, Title='', Desc='', Color=(config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["R"], config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["G"], config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["B"])):
+async def BaseEmbed(ctx, Title='', Desc='', Color=(config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["R"], config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["G"], config['EVERY_EMBED_COLOR']["COLOR_IN_RGB"]["B"]), field=None):
+    """
+    Sends a message to a Discord channel with a base embed. Or an embed that is have been ready.
+
+    Parameters (! means important):
+    !ctx (Context): You need to put this as the first parameter.
+    Title (str, optional): The title of the embed. Defaults to an empty string.
+    Desc (str, optional): The description of the embed. Defaults to an empty string.
+    Color (tuple, optional): A tuple representing the RGB color of the embed. Defaults to a predefined color in the config.
+    field (list of dict, optional): A list of fields to add to the embed. Each field is a dictionary with 'name', 'value', 'inline' keys. Defaults to None.
+
+    Returns:
+    discord.Message: The message that was sent.
+    """
     embed = discord.Embed(
         title=Title,
         description=Desc,
         color=discord.Color.from_rgb(*Color)
     )
+    if field is not None:
+        for f in field:
+            embed.add_field(name=f['name'], value=f['value'], inline=f['inline'])
     message = await ctx.send(embed=embed)
     return message
 
