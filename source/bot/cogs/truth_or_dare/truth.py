@@ -28,7 +28,7 @@ class Truth(commands.Cog):
             embed = await BaseEmbed(ctx, 'Truth', data['challenge'], field=[
                 {'name': "Truth ID: ", 'value': data['id'], 'inline': True}
             ])
-        else:
+        elif id:
             data = truth.data
             pick = int(id)
             # Showcasing O(n) time complexity
