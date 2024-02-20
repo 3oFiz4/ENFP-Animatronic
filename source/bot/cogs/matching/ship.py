@@ -7,6 +7,7 @@ import asyncio as IO
 import httpx, aiohttp
 import random
 import json
+import sys
 with open("../config.json") as f:config = json.load(f)
 
 class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDFSDFSDFSDFGDFGDFGRET
@@ -14,10 +15,11 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
         self.client = client
     
     def name_compatibility(self, name1, name2):
-        def det(a, b):
+        def det(a, b): # DETERMINANT RANDOM
             input_string = str(a) + ',' + str(b)
-            random.seed(hash(input_string))
-            return random.uniform(a, b)
+            hash_value = hash(input_string)
+            large_number = sys.maxsize * 10 
+            return a + (b - a) * (abs(hash_value) / large_number)
         
         def Lev_distance(name1, name2):
             matrix = [[0 for j in range(len(name2) + 1)] for i in range(len(name1) + 1)]
