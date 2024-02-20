@@ -18,7 +18,7 @@ class Request(commands.Cog):
     @commands.command()
     async def request(self, ctx, types=None, *, content:str=None):
         if not types or not content:
-            return await BaseEmbed(ctx, 'Parameter error', f'Expecting `request [TYPE:Dare or Truth] [CONTENT:string]`\n**Got:**\nType: {types}\nContent: {content}\n\n**Example**\n```bash\nrequest Truth What is your number?\n```', Color=(255,0,0))
+            return await BaseEmbed(ctx, 'Parameter error', f'Expecting `request [TYPE:Dare or Truth] [CONTENT:string]`\n**Got:**\nType: {types}\nContent: {content}\n\n**Example**\n```bash\nrequest Truth What is your number?\n```', Color=(0,255,0))
         supabase.table("tod").insert([{"challenge": content, "type": types.capitalize()}]).execute()
         await BaseEmbed(ctx, f'New {types.lower()} is added.', content, Color=(255,0,0))
         

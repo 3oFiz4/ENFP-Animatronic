@@ -28,7 +28,7 @@ class Dare(commands.Cog):
             embed = await BaseEmbed(ctx, 'Dare', data['challenge'], field=[
                 {'name': "Dare ID: ", 'value': data['id'], 'inline': True}
             ])
-        else:
+        elif id:
             data = dare.data
             pick = int(id)
             # Showcasing O(n) time complexity
