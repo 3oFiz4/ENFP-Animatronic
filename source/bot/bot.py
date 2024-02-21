@@ -80,6 +80,7 @@ class CustomHelpCommand(commands.MinimalHelpCommand):
     ## discord.User is a datatype, which you can trigger using @[USERNAME]
     >ship [FIRST_USER:discord.User] [SECOND_USER:discord.User]
     ## e.g. `;ship @Nakiwa @Cleo`
+    >zamn [USER:discord.User] ## Put your profile in a zamn template.... lmfao.
 
     # AI Related commands:
     >askenfp [TEXT:str] ## It simply give the GPT a text, which will be output to current channel.
