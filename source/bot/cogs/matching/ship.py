@@ -8,6 +8,9 @@ import httpx, aiohttp
 import random
 import json
 import sys
+import os
+from urllib.parse import urlparse
+
 with open("../config.json") as f:config = json.load(f)
 
 class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDFSDFSDFSDFGDFGDFGRET
@@ -86,17 +89,37 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
     async def create_image_merger(self, name1, name2, percentage):
         Possible_background = config['SHIP']['POSSIBLE_BACKGROUND']
         async with aiohttp.ClientSession() as session, httpx.AsyncClient() as client:
+            #? What this function does is to retrieve a given URL, and then downloading it (The reason we did this, because we are assuming that the user might trigger the same command, and for the sake of performance), after that, assuming the user trigger this command again, instead it will check if the URL given are equal to any file in `background_asset/`, if it found one, it will re-use that one instead, and if it doesn't found one, it will repeat the first process, which is to retrieve a given URL
             async def load_image(url):
-                response = await client.get(url)
-                if response.status_code != 200:
-                    return "Err non-200"
-                return BytesIO(response.content)
+                parsed_url = urlparse(url)
+                image_name = os.path.basename(parsed_url.path)
+                dir_path = os.path.dirname(os.path.realpath(__file__))
+                local_path = os.path.join(dir_path, 'background_asset', image_name)
 
+                if os.path.exists(local_path):
+                    with open(local_path, 'rb') as f:
+                        return BytesIO(f.read())
+                else:
+                    async with httpx.AsyncClient() as client:
+                        response = await client.get(url)
+                        if response.status_code != 200:
+                            return "Err non-200"
+                        with open(local_path, 'wb') as f:
+                            f.write(response.content)
+                        with open(local_path, 'rb') as f:
+                            return BytesIO(f.read())
+            #? Similar to above function, but instead this one doesn't downloading the given URL. And only download it (everytime user trigger this command)
+            async def load_profile(url):
+                async with httpx.AsyncClient() as client:
+                    response = await client.get(url)
+                    if response.status_code != 200:
+                        return "Err non-200"
+                    return BytesIO(response.content)
             # If Percentage is 100%-80%
             if percentage >= 80:
                 REQ_PFP_1, REQ_PFP_2, background, love_icon, heart, heart2 = await IO.gather(
-                    load_image(str(name1.display_avatar)),
-                    load_image(str(name2.display_avatar)),
+                    load_profile(str(name1.display_avatar)),
+                    load_profile(str(name2.display_avatar)),
                     load_image(random.choice(Possible_background)),
                     load_image('https://purepng.com/public/uploads/large/heart-icon-jst.png'),
                     load_image('https://i.pinimg.com/originals/bf/c5/14/bfc51405ddf0003dd91dce19325a22ef.png'),
@@ -148,8 +171,8 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
             # If Percentage is 80%-50%
             elif percentage >= 50:
                 REQ_PFP_1, REQ_PFP_2, background, love_icon = await IO.gather(
-                    load_image(str(name1.display_avatar)),
-                    load_image(str(name2.display_avatar)),
+                    load_profile(str(name1.display_avatar)),
+                    load_profile(str(name2.display_avatar)),
                     load_image(random.choice(Possible_background)),
                     load_image('https://purepng.com/public/uploads/large/heart-icon-jst.png'),
                 )
@@ -189,8 +212,8 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
             # If Percentage is 50%-20%
             elif percentage >= 20:
                 REQ_PFP_1, REQ_PFP_2, background, love_icon = await IO.gather(
-                    load_image(str(name1.display_avatar)),
-                    load_image(str(name2.display_avatar)),
+                    load_profile(str(name1.display_avatar)),
+                    load_profile(str(name2.display_avatar)),
                     load_image('https://img.freepik.com/free-photo/beautiful-shot-tall-trees-forest-fog-surrounded-by-plants_181624-2352.jpg'),
                     load_image('https://pngimg.com/uploads/broken_heart/broken_heart_PNG39.png'),
                 )
@@ -230,7 +253,7 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
             # If Percentage is 20%-0% literally unloved.
             elif percentage >= 0:
                 REQ_PFP_1, background = await IO.gather(
-                    load_image(str(name1.display_avatar)),
+                    load_profile(str(name1.display_avatar)),
                     load_image('https://img.freepik.com/free-vector/halloween-background-with-old-cemetery-gravestones-spooky-leafless-trees-full-moon-night-sky-realistic-illustration_1284-65419.jpg'),
                 )
                 img_1 = Image.open(REQ_PFP_1)
