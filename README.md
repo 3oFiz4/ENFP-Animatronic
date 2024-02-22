@@ -5,8 +5,6 @@ This bot is all about bringing the party to our server with minigames, surprises
 
 
 Stay tuned, it's about to get lit! 🔥"!
-## UPDATE TODO
-![image](https://github.com/DaemonPooling/ENFP-Animatronic/assets/157283533/5467b4a5-58e7-4108-ba38-e9333ef93a72)
 ## 🌈 What's Inside?
 - **cogs/note** This is a list of command for adding a note.
 - **cogs/birthday** This is a list of command for handling and tracking a birthday.
