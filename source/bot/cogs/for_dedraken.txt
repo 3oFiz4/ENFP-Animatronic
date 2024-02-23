@@ -1,0 +1,1 @@
+Can you create a command that accept 2 parameter, image: Union[Url, Fromfile], and size: (x, y). And then, it will create the server an emoji, that is equivalent to the given image argument, and size.
