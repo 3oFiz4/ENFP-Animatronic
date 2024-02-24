@@ -9,6 +9,9 @@ import random
 import json
 import sys
 import os
+import time
+import math
+import hashlib
 from urllib.parse import urlparse
 
 with open("../config.json") as f:config = json.load(f)
@@ -19,10 +22,9 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
     
     def name_compatibility(self, name1, name2):
         def det(a, b): # DETERMINANT RANDOM
-            input_string = str(a) + ',' + str(b)
-            hash_value = hash(input_string)
-            large_number = sys.maxsize * 10 
-            return a + (b - a) * (abs(hash_value) / large_number)
+            current_time = time.time()  # Get the current time
+            frac, _ = math.modf(current_time)  # Get the fractional part of the current time
+            return a + int((b - a + 1) * frac)  # Scale the fractional part to the range [a, b]
         
         def Lev_distance(name1, name2):
             matrix = [[0 for j in range(len(name2) + 1)] for i in range(len(name1) + 1)]
@@ -37,7 +39,7 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
                                     matrix[i][j - 1] + 1,
                                     matrix[i - 1][j - 1] + cost) 
             return matrix[len(name1)][len(name2)]
-            
+        
         # Convert both names to lowercase and remove any spaces or punctuation
         name1 = name1.lower().replace(" ", "").replace(".", "").replace(",", "")
         name2 = name2.lower().replace(" ", "").replace(".", "").replace(",", "")
@@ -84,7 +86,7 @@ class Ship(commands.Cog): #I FEEL ILL BADD FOR MAKING THIS COMMAND AHDHHDSHFHSDF
         # Average the compatibility scores for all parameters to get the final compatibility score
         final_score = (det(score_letters, perc_letters) + det(score_vowels, perc_vowels) + det(score_consonants, perc_consonants) + det(score_syllables, perc_syllables) + det(Lev_normalized, Lev)) / 5
         name_sim = 100 - Lev_normalized
-        return det(final_score, name_sim)
+        return det(det(final_score, name_sim), 100)
     # TODO: Rather than actually download each link in an Image, and for the sake of time complexity. User will be prompted to download the images, then store in an assets, and then load the Image. Which benefit a large speeds.
     async def create_image_merger(self, name1, name2, percentage):
         Possible_background = config['SHIP']['POSSIBLE_BACKGROUND']
