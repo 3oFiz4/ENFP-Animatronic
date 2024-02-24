@@ -17,20 +17,22 @@ project_root = os.getenv('PROJECT_ROOT')
 sys.path.insert(0, project_root)
 from source.bot.utils import CogAlert
 
-class AskENFP(commands.Cog):
+class Insult(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command()
-    async def askenfp(self, ctx, *, text: str):
+    async def insult(self, ctx, *, user):
+        user = await self.client.fetch_user(int(user[2:-1]))
+        name = user.name
+        glob_name = user.display_name
         try:
             completion = ai.ChatCompletion.create(
                 model=ai_model,
                 messages=[
-                    {"role": "system", "content": 
-                        "Your name is Daisy, you are a 15 year old girl, that loves mathematics. You should reply in a way how an ENFP MBTI personality talks. Reply to my tent. "
+                    {"role": "system"
                     },
-                    {"role": "user", "content": text}
+                    {"role": "user", "content": f"Give an insult to {name}"}
                 ]
             )
             
@@ -38,9 +40,9 @@ class AskENFP(commands.Cog):
             
             await ctx.reply(r)
             CogAlert(ctx.author.name)
-            log(f'[cyan bold]USER QUESTION: [blue]{text}[blue][/cyan bold]\nAI REPLY: [green bold]{r}[/green bold]')
+            log(f'[cyan bold]USER QUESTION: [blue]{user}[blue][/cyan bold]\nAI REPLY: [green bold]{r}[/green bold]')
         except Exception as ERR:
-            log(f'[red bold]AskENFP Command failed to run.\nERR: {ERR}[/]\n[#FFFF00]Have you provided a correct API Endpoint and API key?[/]')
+            log(f'[red bold]Insult Command failed to run.\nERR: {ERR}[/]\n[#FFFF00]Have you provided a correct API Endpoint and API key?[/]')
 
 async def setup(client):
     classes = getmembers(modules[__name__], isclass)
