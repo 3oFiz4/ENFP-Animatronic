@@ -14,3 +14,5 @@ Not forced to be users btw but it would be more fun 😀
 - Suggestion (Smash or Pass)
 The bot shows a random picture of a character or famous person or someone in the server
 We choose to smash or pass... or spass XD
+- QOTD
+- Insult command [V]
